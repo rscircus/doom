@@ -3,11 +3,48 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
+(setq user-full-name "Roland Siegbert"
+      user-mail-address "roland@siegbert.info")
 
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets.
-(setq user-full-name "John Doe"
-      user-mail-address "john@doe.com")
+(setq-default
+window-combination-resize t ; take new window space from all windows
+x-stretch-cursor t ; stretch cursor to glyph width
+)
+
+(setq undo-limit 80000000 ; 80Mb undo limit
+      evil-want-fine-undo t ; evil is blobby, except when being fine and granular
+      auto-save-default t
+      truncate-string-ellipsis "…"
+)
+
+(display-time-mode 1) ; show time in mode-line
+(unless (equal "Battery status not available" (battery))
+  (display-battery-mode 1))
+(global-subword-mode 1) ; iterate through CamelCase words
+
+(setq evil-vsplit-window-right t
+      evil-split-window-below t
+)
+
+(defadvice! prompt-for-buffer (&rest _)
+  :after '(evil-window-split evil-window-vsplit)
+  (+ivy/switch-buffer)
+)
+
+(setq +ivy-buffer-preview t)
+
+(map! :map evil-window-map
+     "SPC" #'rotate-layout
+     ;; Navigation
+     "<left>"     #'evil-window-left
+     "<down>"     #'evil-window-down
+     "<up>"       #'evil-window-up
+     "<right>"    #'evil-window-right
+     ;; Swapping windows
+     "C-<left>"       #'+evil/window-move-left
+     "C-<down>"       #'+evil/window-move-down
+     "C-<up>"         #'+evil/window-move-up
+     "C-<right>"      #'+evil/window-move-right)
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
@@ -19,7 +56,10 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "monospace" :size 14))
+(setq doom-font (font-spec :family "JetBrains Mono" :size 24)
+      doom-big-font (font-spec :family "JetBrains Mono" :size 36)
+      doom-variable-pitch-font (font-spec :family "Overpass" :size 24)
+      doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -33,7 +73,6 @@
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
-
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
