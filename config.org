@@ -1,0 +1,75 @@
+# -*- mode: org; eval: (add-hook 'after-save-hook (lambda () (org-html-export-to-html t)) nil t) -*-
+#+TITLE: Doom Emacs Config
+
+* Intro
+
+This is all tecosaur's and Donald's fault:
+
+#+begin_quote
+Let us change our traditional attitude to the construction of programs: Instead of imagining that our main task is to instruct a computer what to do, let us concentrate rather on explaining to human beings what we want a computer to do. — Donald Knuth
+#+end_quote
+
+So, a bunch of things are happening here at the same time, even though people tell me to stop doing that (kind of multilearning).
+
+- Learning Emacs
+- Learning Org
+- Learning Literate Programming
+- Configuring Emacs
+
+However, the first three things are necessary to do the last. So, here ware, multitasking.
+
+* Basic Configuration
+
+** Personal Information
+
+#+begin_src emacs-lisp
+(setq user-full-name "Roland Siegbert"
+      user-mail-address "roland@siegbert.info")
+#+end_src
+
+
+Phew, don't sweat it.
+
+
+** Some defaults
+
+*** Basic settings
+
+#+begin_src emacs-lisp
+(setq-default
+window-combination-resize t ; take new window space from all windows
+x-stretch-cursor t ; stretch cursor to glyph width
+)
+
+(setq undo-limit 80000000 ; 80Mb undo limit
+      evil-want-fine-undo t ; evil is blobby, except when being fine and granular
+      auto-save-default
+      truncate-string-ellipsis "…"
+)
+
+(display-time-mode 1) ; show time in mode-line
+(unless (equal "Battery status not available" (battery))
+  (display-battery-mode 1))
+(global-subword-mode 1) ; iterate through CamelCase words
+#+end_src
+
+*** Windows
+
+Ask what to see, after splitting:
+
+#+begin_src emacs-lisp
+(setq evil-vsplit-window-right t
+      evil-split-window-below t
+)
+
+(defadvice! prompt-for-buffer (&rest _)
+  :after '(evil-window-split evil-window-vsplit)
+  (+ivy/switch-buffer)
+)
+
+(setq +ivy-buffer-preview t)
+#+end_src
+* Resources:
+
+- https://tecosaur.github.io/emacs-config/config.html
+- https://raw.githubusercontent.com/tecosaur/emacs-config/master/config.org
