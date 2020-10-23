@@ -1,53 +1,25 @@
 ;; -*- no-byte-compile: t; -*-
-;;; $DOOMDIR/packages.el
 
-;; To install a package with Doom you must declare them here, run 'doom sync' on
-;; the command line, then restart Emacs for the changes to take effect.
-;; Alternatively, use M-x doom/reload.
-;;
-;; WARNING: Disabling core packages listed in ~/.emacs.d/core/packages.el may
-;; have nasty side-effects and is not recommended.
-
-
-;; All of Doom's packages are pinned to a specific commit, and updated from
-;; release to release. To un-pin all packages and live on the edge, do:
-;(unpin! t)
-
-;; ...but to unpin a single package:
-;(unpin! pinned-package)
-;; Use it to unpin multiple packages
-;(unpin! pinned-package another-pinned-package)
-
-
-;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
-;(package! some-package)
-
-;; To install a package directly from a particular repo, you'll need to specify
-;; a `:recipe'. You'll find documentation on what `:recipe' accepts here:
-;; https://github.com/raxod502/straight.el#the-recipe-format
-;(package! another-package
-;  :recipe (:host github :repo "username/repo"))
-
-;; If the package you are trying to install does not contain a PACKAGENAME.el
-;; file, or is located in a subdirectory of the repo, you'll need to specify
-;; `:files' in the `:recipe':
-;(package! this-package
-;  :recipe (:host github :repo "username/repo"
-;           :files ("some-file.el" "src/lisp/*.el")))
-
-;; If you'd like to disable a package included with Doom, for whatever reason,
-;; you can do so here with the `:disable' property:
-;(package! builtin-package :disable t)
-
-;; You can override the recipe of a built in package without having to specify
-;; all the properties for `:recipe'. These will inherit the rest of its recipe
-;; from Doom or MELPA/ELPA/Emacsmirror:
-;(package! builtin-package :recipe (:nonrecursive t))
-;(package! builtin-package-2 :recipe (:repo "myfork/package"))
-
-;; Specify a `:branch' to install a package from a particular branch or tag.
-;; This is required for some packages whose default branch isn't 'master' (which
-;; our package manager can't deal with; see raxod502/straight.el#279)
-;(package! builtin-package :recipe (:branch "develop"))
 (package! org-roam-bibtex)
 (package! org-noter)
+
+(package! rotate :pin "091b5ac4fc...") ; window mgmt
+(package! xkcd :pin "66e928706f...")
+(package! wttrin :recipe (:local-repo "lisp" :no-byte-compile t))
+(package! spray :pin "00638bc916...") ; flash words on screen
+(package! theme-magic :pin "844c4311bd...") ; terminal theme support
+(package! calctex :recipe (:host github :repo "johnbcoughlin/calctex"
+                           :files ("*.el" "calctex/*.el" "calctex-contrib/*.el" "org-calctex/*.el"))
+  :pin "7fa2673c64...")
+(package! ess-view :pin "d4e5a340b7...") ; data frames all the way down
+(package! info-colors :pin "47ee73cc19...") ; makes info pages better
+(package! org-super-agenda :pin "3264255989...")
+(package! org-pretty-table-mode
+  :recipe (:host github :repo "Fuco1/org-pretty-table") :pin "88380f865a...")
+(package! org-fragtog :pin "92119e3ae7...")
+(package! org-pretty-tags :pin "40fd72f3e7...")
+(package! ox-gfm :pin "99f93011b0...") ; markdown export with GitHub support
+(package! org-ref :pin "f582e9c53e...") ; citations
+(package! org-graph-view :recipe (:host github :repo "alphapapa/org-graph-view") :pin "13314338d7...")
+(package! org-chef :pin "5b461ed7d458cdcbff0af5013fbdbe88cbfb13a4") ; url -> orgified version of it
+(package! graphviz-dot-mode :pin "3642a0a5f41a80c8ecef7c6143d514200b80e194")
