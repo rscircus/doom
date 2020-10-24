@@ -54,7 +54,13 @@ x-stretch-cursor t ; stretch cursor to glyph width
 
 (setq display-line-numbers-type t)
 
-(setq doom-theme 'doom-acario-light)
+;; Fontify the whole line for headings (with a background color).
+(setq org-fontify-whole-heading-line t)
+
+;; (setq doom-theme 'doom-acario-light)
+;;(load-theme 'leuven t)
+(load-theme 'acme t)
+(setq acme-theme-black-fg t)
 
 (map! :n [mouse-8] #'better-jumper-jump-backward
       :n [mouse-9] #'better-jumper-jump-forward)

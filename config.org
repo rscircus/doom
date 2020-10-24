@@ -118,8 +118,19 @@ Doom has a modular configuration base. A good starting point is the =init.el= fi
 
 (setq display-line-numbers-type t)
 
-(setq doom-theme 'doom-acario-light)
+
+;; (setq doom-theme 'doom-acario-light)
+;;(load-theme 'leuven t)
+(load-theme 'acme t)
+
+(setq acme-theme-black-fg t)
+
+;; Fontify the whole line for headings (with a background color). Has to go above loven, but below acme.
+(setq org-fontify-whole-heading-line t)
 #+end_src
+
+#+RESULTS:
+: leuven-theme
 
 ** Mouse
 
@@ -188,6 +199,8 @@ The following section fills =packages.el=. And this file shouldn't be byte compi
 (package! org-graph-view :recipe (:host github :repo "alphapapa/org-graph-view") :pin "13314338d7...")
 (package! org-chef :pin "5b461ed7d458cdcbff0af5013fbdbe88cbfb13a4") ; url -> orgified version of it
 (package! graphviz-dot-mode :pin "3642a0a5f41a80c8ecef7c6143d514200b80e194")
+(package! leuven-theme) ;; great theme for org
+(package! acme-theme) ;; even greater theme
 #+end_src
 
 * Now let's customize the packages above in =config.el=
