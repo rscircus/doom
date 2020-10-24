@@ -203,6 +203,9 @@ The following section fills =packages.el=. And this file shouldn't be byte compi
 (package! acme-theme) ;; even greater theme
 #+end_src
 
+#+RESULTS:
+| graphviz-dot-mode | :modules | ((:private . config) (:private . modules)) | :pin | 3642a0a5f41a80c8ecef7c6143d514200b80e194 |
+
 * Now let's customize the packages above in =config.el=
 ** Company
 It's nice to have completions almost all the time, in my opinion. Key strokes
@@ -220,6 +223,7 @@ let's improve that memory.
 (setq-default history-length 1000)
 (setq-default prescient-history-length 1000)
 #+end_src
+
 ** Plain Text
 ~Ispell~ is nice, let's have it in ~text~, ~markdown~, and ~GFM~.
 #+begin_src emacs-lisp
@@ -243,6 +247,18 @@ let's improve that memory.
 (add-hook 'Info-mode-hook #'mixed-pitch-mode)
 #+end_src
 
+** Modifying doom
+
+#+begin_src emacs-lisp
+(setq which-key-idle-delay 0.5) ;; I need the help, I really do
+(setq which-key-allow-multiple-replacements t)
+(after! which-key
+  (pushnew!
+   which-key-replacement-alist
+   '(("" . "\\`+?evil[-:]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1"))
+   '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1"))
+   ))
+#+end_src
 
 * Resources:
 
