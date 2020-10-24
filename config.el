@@ -65,7 +65,7 @@ x-stretch-cursor t ; stretch cursor to glyph width
 (map! :n [mouse-8] #'better-jumper-jump-backward
       :n [mouse-9] #'better-jumper-jump-forward)
 
-(setq org-directory "~/org/")
+(setq org-directory "~/src/org/")
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one

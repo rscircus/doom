@@ -144,7 +144,7 @@ Doom has a modular configuration base. A good starting point is the =init.el= fi
 * Previous =config.el=
 
 #+begin_src emacs-lisp
-(setq org-directory "~/org/")
+(setq org-directory "~/src/org/")
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
