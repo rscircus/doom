@@ -138,10 +138,15 @@ Doom has a modular configuration base. A good starting point is the =init.el= fi
 (map! :n [mouse-8] #'better-jumper-jump-backward
       :n [mouse-9] #'better-jumper-jump-forward)
 #+end_src
+
 * Advanced Configuration
 ** Packages
 
 * Previous =config.el=
+
+** org
+
+The basic org configuration
 
 #+begin_src emacs-lisp
 (setq org-directory "~/src/org/")
@@ -163,7 +168,38 @@ Doom has a modular configuration base. A good starting point is the =init.el= fi
 ;; they are implemented.
 #+end_src
 
-* Package loading (=packages.el=)
+*** Save images from clipboard (org-download)
+
+I'll have to redo this another day. My understanding of emacs is not there, yet.
+
+The integration via
+
+#+begin_src emacs-lisp :tangle no
+(org
+ +download) ;init.el
+#+end_src
+
+is pretty nice. :-)
+
+*** Buffer org creation
+
+#+begin_src emacs-lisp
+(evil-define-command evil-buffer-org-new (count file)
+  "Creates a new org buffer replacing the current window, optionally editing a certain FILE"
+  :repeat nil
+  (interactive "P<f>")
+  (if file
+      (evil-edit file)
+    (let ((buffer (generate-new-buffer "*new org*")))
+      (set-window-buffer nil buffer)
+      (with-current-buffer buffer
+        (org-mode)))))
+(map! :leader
+      (:prefix "b"
+       :desc "New empty ORG buffer" "o" #'evil-buffer-org-new))
+#+end_src
+
+* Package loading (=packages.el=) :ATTACH:
 :PROPERTIES:
 :header-args:emacs-lisp: :tangle "packages.el"
 :END:
