@@ -157,8 +157,10 @@
         +roam              ; roam around notes
         +journal
         +jupyter
+        +download          ; drag and drop images / clipboard interaction
         +pandoc            ; export
         +gnuplot           ; pictures
+        +noter             ; taking notes
         +present)          ; org-mode for presentations
        ;;perl              ; write code no one else can comprehend
        ;;php               ; perl's insecure younger brother
