@@ -141,7 +141,7 @@
        ;;kotlin            ; a better, slicker Java(Script)
        (latex             ; writing papers in Emacs has never been so fun
         +latexmk
-        +cdlatex
+        ;+cdlatex - messes with org/lisp (backtick gets overwritten)
         +fold)
        ;;lean
        ;;factor
