@@ -25,6 +25,7 @@
        ;;ido               ; the other *other* search engine...
        (ivy                ; a search engine for love and life
         +icons
+        +fuzzy
         +prescient)        ; ... maybe I know what I wanted
 
        :ui
