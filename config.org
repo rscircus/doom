@@ -80,7 +80,7 @@ Ask what to see, after splitting:
 #+end_src
 
 Rotate windows:
-- =SPC wr= - Rotate windows
+- =SPC w r= - Rotate windows
 - =SPC w R= - Rotate Layout (=C-a SPC)
 
  Move around and swap windows:
