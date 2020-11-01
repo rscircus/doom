@@ -77,6 +77,10 @@ Phew, don't sweat it.
                                         ;(setq line-spacing 0.3) ; huge line spacing
 (unless (equal "Battery status not available" (battery))
   (display-battery-mode 1))
+
+;; disable risky local variables warning
+(advice-add 'risky-local-variable-p :override #'ignore)
+
 #+end_src
 
 *** Full screen
