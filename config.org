@@ -306,6 +306,21 @@ Meanwhile doom integrates =roam= quite nicely. Access it by typing =SPC
                                         ; TODO: This capture template for websites requires org-roam protocol
 #+end_src
 
+** Deft
+
+Quickly search through org.
+
+#+BEGIN_SRC emacs-lisp
+(use-package deft
+  :after org
+                                        ;:bind
+                                        ;("C-c n d" . deft)
+  :custom
+  (deft-recursive t)
+  (deft-use-filter-string-for-filename t)
+  (deft-default-extension "org"))
+#+END_SRC
+
 * Package loading (=packages.el=) :ATTACH:
 :PROPERTIES:
 :header-args:emacs-lisp: :tangle "packages.el"
