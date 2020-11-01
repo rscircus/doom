@@ -368,9 +368,24 @@ Meanwhile doom integrates =roam= quite nicely. Access it by typing =SPC
            :head "#+TITLE: ${title}
 ,#+ROAM_KEY: ${ref}
 - source :: ${ref}"
-           :unnarrowed t))))
+           :unnarrowed t)))
+
+  ;; Normally, the org-roam buffer doesn't open until you explicitly call
+  ;; `org-roam'. If `+org-roam-open-buffer-on-find-file' is non-nil, the
+  ;; org-roam buffer will be opened for you when you use `org-roam-find-file'
+  ;; (but not `find-file', to limit the scope of this behavior).
+  (add-hook 'find-file-hook
+            (defun +org-roam-open-buffer-maybe-h ()
+              (and +org-roam-open-buffer-on-find-file
+                   (memq 'org-roam-buffer--update-maybe post-command-hook)
+                   (not (window-parameter nil 'window-side)) ; don't proc for popups
+                   (not (eq 'visible (org-roam-buffer--visibility)))
+                   (with-current-buffer (window-buffer)
+                     (org-roam-buffer--get-create)))))
+  )
                                         ; TODO: This capture template for websites requires org-roam protocol
 #+end_src
+
 *** Org Roam Server
 
 #+BEGIN_SRC emacs-lisp
