@@ -406,15 +406,26 @@ are just waiting to be saved!
   (setq company-show-numbers t)
   (add-hook 'evil-normal-state-entry-hook #'company-abort)) ;; make aborting less annoying.
 #+end_src
+
 Now, the improvements from ~precedent~ are mostly from remembering history, so
 let's improve that memory.
+
 #+begin_src emacs-lisp
 (setq-default history-length 1000)
 (setq-default prescient-history-length 1000)
 #+end_src
 
+** Beacon
+
+#+BEGIN_SRC emacs-lisp
+(beacon-mode 1) ; beacon blink everywhere
+(map! :leader "c b" #'beacon-blink) ; find the cursor
+#+END_SRC
+
 ** Plain Text
+
 ~Ispell~ is nice, let's have it in ~text~, ~markdown~, and ~GFM~.
+
 #+begin_src emacs-lisp
 (set-company-backend!
   '(text-mode
