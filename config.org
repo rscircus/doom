@@ -338,6 +338,25 @@ Meanwhile doom integrates =roam= quite nicely. Access it by typing =SPC
            :unnarrowed t))))
                                         ; TODO: This capture template for websites requires org-roam protocol
 #+end_src
+*** Org Roam Server
+
+#+BEGIN_SRC emacs-lisp
+(use-package! org-roam-server
+  :after org-roam
+  :config
+  (setq org-roam-server-host "127.0.0.1"
+        org-roam-server-port 10080
+        org-roam-server-export-inline-images t
+        org-roam-server-authenticate nil
+        org-roam-server-label-truncate t
+        org-roam-server-label-truncate-length 60
+        org-roam-server-label-wrap-length 20)
+  (defun org-roam-server-open ()
+    "Ensure the server is active, then open the roam graph."
+    (interactive)
+    (org-roam-server-mode 1)
+    (browse-url-xdg-open (format "http://localhost:%d" org-roam-server-port))))
+#+END_SRC
 
 ** Deft
 
@@ -378,10 +397,11 @@ The following section fills =packages.el=. And this file shouldn't be byte compi
 (package! info-colors :pin "47ee73cc19...") ; makes info pages better
 
 ;; sanity
-; TODO: not ready yet: (package! origami) ; fold stuff away
+                                        ; TODO: not ready yet: (package! origami) ; fold stuff away
 
 ;; org
 (package! org-roam-bibtex)
+(package! org-roam-server :recipe (:host github :repo "org-roam/org-roam-server" :files ("*")))
 (package! org-noter)
 
                                         ;(package! calctex :recipe (:host github :repo "johnbcoughlin/calctex"
