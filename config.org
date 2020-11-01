@@ -415,13 +415,26 @@ Quickly search through org.
   :after org
                                         ;:bind
                                         ;("C-c n d" . deft)
+  :init
+  (setq deft-default-extension "org"
+        ;; de-couples filename and note title:
+        deft-use-filename-as-title nil
+        deft-use-filter-string-for-filename t
+        ;; disable auto-save
+        deft-auto-save-interval -1.0
+        ;; converts the filter string into a readable file-name using kebab-case:
+        deft-file-naming-rules
+        '((noslash . "-")
+          (nospace . "-")
+          (case-fn . downcase)))
   :custom
   (deft-recursive t)
-  (deft-use-filter-string-for-filename t)
-  (deft-default-extension "org"))
+                                        ;(deft-use-filter-string-for-filename t)
+                                        ;(deft-default-extension "org")
+  )
 #+END_SRC
 
-* Package loading (=packages.el=) :ATTACH:
+* PACKAGES (=packages.el=) :ATTACH:
 :PROPERTIES:
 :header-args:emacs-lisp: :tangle "packages.el"
 :END:
