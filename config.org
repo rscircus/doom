@@ -522,7 +522,7 @@ let's improve that memory.
 ** Modifying doom
 
 #+begin_src emacs-lisp
-(setq which-key-idle-delay 0.5) ;; I need the help, I really do
+(setq which-key-idle-delay 0.3) ;; I need the help, I really do
 (setq which-key-allow-multiple-replacements t)
 (after! which-key
   (pushnew!
