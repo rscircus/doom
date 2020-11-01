@@ -18,6 +18,22 @@ So, a bunch of things are happening here at the same time, even though people te
 
 However, the first three things are necessary to do the last. So, here ware, multitasking.
 
+* TODO Configuration
+** DONE Copy and paste images into org files
+** TODO Understand org-noter and its integration into doom
+:LOGBOOK:
+CLOCK: [2020-11-01 So 09:31]
+:END:
+*** On org-noter itself
+
+Org noter can be visited here: https://github.com/weirdNox/org-noter
+
+
+** TODO Understand deft
+** TODO Understand org-roam and its integration itno doom
+** TODO Connect org-roam with some kind of citation system like bibtex?
+** TODO Become more fluent with org itself
+
 * Basic Configuration
 
 ** DOOMs stuff
