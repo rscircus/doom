@@ -156,6 +156,7 @@
         +pretty            ; unicode symbols
         +dragndrop         ; drag and drop images
         +roam              ; roam around notes
+        +brain             ; basically the same, need to decide about one some time...
         +journal
         +jupyter
         +download          ; drag and drop images / clipboard interaction
