@@ -116,6 +116,18 @@ Rotate windows:
       "C-<right>"      #'+evil/window-move-right)
 #+end_src
 
+*** Modeline
+
+Usually everything is =UTF-8= these days. So, only show if it is not!
+
+#+begin_src emacs-lisp
+(defun doom-modeline-conditional-buffer-encoding ()
+  (setq-local doom-modeline-buffer-encoding
+              (unless (or (eq buffer-file-coding-system 'utf-8-unix)
+                          (eq buffer-file-coding-system 'utf-8)))))
+(add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
+#+end_src
+
 ** Doom configuration
 
 *** Modules
