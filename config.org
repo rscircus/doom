@@ -248,6 +248,27 @@ is pretty nice. :-)
        :desc "New empty ORG buffer" "o" #'evil-buffer-org-new))
 #+end_src
 
+*** Org Journal
+
+Use this as a daily driver.
+
+#+BEGIN_SRC emacs-lisp
+;; org-journal the DOOM way
+(use-package org-journal
+  :init
+  (setq org-journal-date-prefix "#+TITLE: "
+        org-journal-file-format "%Y-%m-%d.org"
+        org-journal-date-format "%A, %d %B %Y")
+  :config
+  (setq org-journal-find-file #'find-file-other-window )
+  (map! :map org-journal-mode-map
+        "C-c n s" #'evil-save-modified-and-close )
+  )
+
+(setq org-journal-enable-agenda-integration t)
+#+END_SRC
+
+
 *** Org Noter
 
 #+begin_src emacs-lisp
