@@ -159,17 +159,35 @@ Doom has a modular configuration base. A good starting point is the =init.el= fi
 
 ** Look and feel
 
+*** Fonts
+
+Proportional fonts
+
+#+BEGIN_SRC emacs-lisp
+(defun my-buffer-face-mode-variable ()
+  "Set font to a variable width (proportional) fonts in current buffer"
+  (interactive)
+  (setq buffer-face-mode-face '(:family "JetBrains Mono" :height 100 ))
+  (buffer-face-mode))
+(add-hook 'org-mode-hook 'my-buffer-face-mode-variable)
+#+END_SRC
+
+Other font settings
+
 #+begin_src emacs-lisp
 (setq doom-font (font-spec :family "JetBrains Mono" :size 20)
       doom-big-font (font-spec :family "JetBrains Mono" :size 24)
       doom-variable-pitch-font (font-spec :family "Overpass" :size 14)
       doom-serif-font (font-spec :family "IBM Plex Mono" :size 20 :weight 'light)
-)
+      )
 
 (setq display-line-numbers-type t)
+#+end_src
 
+*** Theme
 
-;; (setq doom-theme 'doom-acario-light)
+#+BEGIN_SRC emacs-lisp
+;;(setq doom-theme 'doom-acario-light)
 ;;(load-theme 'leuven t)
 (load-theme 'acme t)
 
@@ -178,6 +196,8 @@ Doom has a modular configuration base. A good starting point is the =init.el= fi
 ;; Fontify the whole line for headings (with a background color). Has to go above loven, but below acme.
 (setq org-fontify-whole-heading-line t)
 #+end_src
+
+Proportional fonts
 
 ** Mouse
 
