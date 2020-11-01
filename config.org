@@ -197,6 +197,9 @@ Proportional fonts
                                         ;  (setq buffer-face-mode-face '(:family "JetBrains Mono" :height 100 ))
                                         ;  (buffer-face-mode))
                                         ;(add-hook 'org-mode-hook 'my-buffer-face-mode-variable)
+;; emoji
+(when (eq system-type 'gnu/linux)
+  (set-fontset-font t 'symbol "Noto Color Emoji" nil 'append))
 #+END_SRC
 
 Other font settings
