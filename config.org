@@ -148,6 +148,18 @@ Usually everything is =UTF-8= these days. So, only show if it is not!
               (unless (or (eq buffer-file-coding-system 'utf-8-unix)
                           (eq buffer-file-coding-system 'utf-8)))))
 (add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
+
+                                        ; and the file name
+(defadvice! doom-modeline--reformat-roam (orig-fun)
+  :around #'doom-modeline-buffer-file-name
+  (message "Reformat?")
+  (message (buffer-file-name))
+  (if (s-contains-p org-roam-directory (or buffer-file-name ""))
+      (replace-regexp-in-string
+       "\\(?:^\\|.*/\\)\\([0-9]\\{4\\}\\)\\([0-9]\\{2\\}\\)\\([0-9]\\{2\\}\\)[0-9]*-"
+       "🢔(\\1-\\2-\\3) "
+       (funcall orig-fun))
+    (funcall orig-fun)))
 #+end_src
 
 ** Doom configuration
