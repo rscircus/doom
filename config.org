@@ -524,3 +524,5 @@ If run interactively, get ENTRY from context."
 
 - https://tecosaur.github.io/emacs-config/config.html
 - https://raw.githubusercontent.com/tecosaur/emacs-config/master/config.org
+- https://rgoswami.me/posts/org-note-workflow/
+- https://github.com/sunnyhasija/Academic-Doom-Emacs-Config/blob/master/README.org
