@@ -164,12 +164,13 @@ Doom has a modular configuration base. A good starting point is the =init.el= fi
 Proportional fonts
 
 #+BEGIN_SRC emacs-lisp
-(defun my-buffer-face-mode-variable ()
-  "Set font to a variable width (proportional) fonts in current buffer"
-  (interactive)
-  (setq buffer-face-mode-face '(:family "JetBrains Mono" :height 100 ))
-  (buffer-face-mode))
-(add-hook 'org-mode-hook 'my-buffer-face-mode-variable)
+                                        ; TODO: Don't get this yet
+                                        ;(defun my-buffer-face-mode-variable ()
+                                        ;  "Set font to a variable width (proportional) fonts in current buffer"
+                                        ;  (interactive)
+                                        ;  (setq buffer-face-mode-face '(:family "JetBrains Mono" :height 100 ))
+                                        ;  (buffer-face-mode))
+                                        ;(add-hook 'org-mode-hook 'my-buffer-face-mode-variable)
 #+END_SRC
 
 Other font settings
