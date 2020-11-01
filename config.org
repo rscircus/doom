@@ -149,7 +149,14 @@ Doom has a modular configuration base. A good starting point is the =init.el= fi
 The basic org configuration
 
 #+begin_src emacs-lisp
-(setq org-directory "~/src/org/")
+(setq
+ org_notes (concat (getenv "HOME") "/src/org/")
+ zot_bib (concat (getenv "HOME") "/src/zotero/zotLib.bib")
+ org-directory org_notes
+ deft-directory org_notes
+ org-roam-directory org_notes
+ )
+                                        ;(setq org-directory "~/src/org/")
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
