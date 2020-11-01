@@ -241,26 +241,42 @@ The basic org configuration
  deft-directory org_notes
  org-roam-directory org_notes
  )
-                                        ;(setq org-directory "~/src/org/")
-;; Here are some additional functions/macros that could help you configure Doom:
-;;
-;; - `load!' for loading external *.el files relative to this one
-;; - `use-package' for configuring packages
-;; - `after!' for running code after a package has loaded
-;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
-;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c g k').
-;; This will open documentation for it, including demos of how they are used.
-;;
-;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
-;; they are implemented.
 #+end_src
 
-*** Save images from clipboard (org-download)
+*** Org Capture
+
+#+BEGIN_SRC emacs-lisp
+(after! org-capture
+  (setq org-capture-templates
+        '(("b" "Basic task for future review" entry
+           (file+headline "tasks.org" "Basic tasks that need to be reviewed")
+           "* %^{Title}\n:PROPERTIES:\n:CAPTURED: %U\n:END:\n\n%i%l"
+           :empty-lines 1)
+
+          ("w" "Work")
+          ("wt" "Task or assignment" entry
+           (file+headline "work.org" "Tasks and assignments")
+           "\n\n* TODO [#A] %^{Title} :@work:\nSCHEDULED: %^t\n:PROPERTIES:\n:CAPTURED: %U\n:END:\n\n%i%?"
+           :empty-lines 1)
+
+          ("wm" "Meeting, event, appointment" entry
+           (file+headline "work.org" "Meetings, events, and appointments")
+           "\n\n* MEET [#A] %^{Title} :@work:\nSCHEDULED: %^T\n:PROPERTIES:\n:CAPTURED: %U\n:END:\n\n%i%?"
+           :empty-lines 1)
+
+          ("t" "Task with a due date" entry
+           (file+headline "tasks.org" "Task list with a date")
+           "\n\n* %^{Scope of task||TODO|STUDY|MEET} %^{Title} %^g\nSCHEDULED: %^t\n:PROPERTIES:\n:CAPTURED: %U\n:END:\n\n%i%?"
+           :empty-lines 1)
+
+          ("j" "Journal" entry
+           (file+olp+datetree "journal.org")
+           "* %?\n"
+           :empty-lines 1)))
+  )
+#+END_SRC
+
+*** Org Download - Save images from clipboard
 
 I'll have to redo this another day. My understanding of emacs is not there, yet.
 
