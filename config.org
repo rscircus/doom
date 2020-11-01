@@ -161,6 +161,16 @@ Usually everything is =UTF-8= these days. So, only show if it is not!
        (funcall orig-fun))
     (funcall orig-fun)))
 #+end_src
+*** Dired
+
+#+BEGIN_SRC emacs-lisp
+(after! dired
+  ;; Rust version ls
+  (when-let (exa (executable-find "exa"))
+    (setq insert-directory-program "/home/linuxbrew/.linuxbrew/bin/exa")
+    (setq dired-listing-switches (string-join (list "-ahl" "--group-directories-first") " ")))
+  )
+#+END_SRC
 
 ** Doom configuration
 
