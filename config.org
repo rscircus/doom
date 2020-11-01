@@ -157,9 +157,6 @@ Doom has a modular configuration base. A good starting point is the =init.el= fi
 (setq org-fontify-whole-heading-line t)
 #+end_src
 
-#+RESULTS:
-: leuven-theme
-
 ** Mouse
 
 #+begin_src emacs-lisp
