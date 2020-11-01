@@ -164,12 +164,7 @@ Doom has a modular configuration base. A good starting point is the =init.el= fi
       :n [mouse-9] #'better-jumper-jump-forward)
 #+end_src
 
-* Advanced Configuration
-** Packages
-
-* Previous =config.el=
-
-** org
+** Org
 
 The basic org configuration
 
