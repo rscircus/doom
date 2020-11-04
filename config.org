@@ -425,6 +425,8 @@ let's improve that memory.
 ** Plain Text
 
 ~Ispell~ is nice, let's have it in ~text~, ~markdown~, and ~GFM~.
+*** TODO ispell doesn't work quite right...
+
 
 #+begin_src emacs-lisp
 (set-company-backend!
@@ -435,7 +437,15 @@ let's improve that memory.
     company-ispell
     company-files
     company-yasnippet))
+
+(setq ispell-program-name (executable-find "hunspell")
+      ispell-dictionary "en_US,de_DE")
+
+(!after ispell
+        (ispell-set-spellchecker-params)
+        (ispell-hunspell-add-multi-dic "en_US,de_DE"))
 #+end_src
+
 
 ** Info colors
 #+begin_src emacs-lisp
