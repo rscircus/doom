@@ -25,10 +25,13 @@
   :recipe (:host github :repo "Fuco1/org-pretty-table") :pin "88380f865a...")
 (package! org-fragtog :pin "92119e3ae7...")
 (package! org-pretty-tags :pin "40fd72f3e7...")
-(package! ox-gfm :pin "99f93011b0...") ; markdown export with GitHub support
 (package! org-ref :pin "f582e9c53e...") ; citations
 (package! org-graph-view :recipe (:host github :repo "alphapapa/org-graph-view") :pin "13314338d7...")
 (package! org-chef :pin "5b461ed7d458cdcbff0af5013fbdbe88cbfb13a4") ; url -> orgified version of it
+(package! company-org-roam :recipe (:host github :repo "org-roam/company-org-roam"))
 (package! graphviz-dot-mode :pin "3642a0a5f41a80c8ecef7c6143d514200b80e194")
+(package! ox-gfm :pin "99f93011b0...") ; markdown export with GitHub support
+
+;; themes
 (package! leuven-theme) ;; great theme for org
 (package! acme-theme) ;; even greater theme
