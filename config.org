@@ -471,6 +471,7 @@ The following section fills =packages.el=. And this file shouldn't be byte compi
                                         ;                           :files ("*.el" "calctex/*.el" "calctex-contrib/*.el" "org-calctex/*.el"))
                                         ; :pin "7fa2673c64...")
 (package! org-super-agenda :pin "3264255989...")
+(package! org-pomodoro) ; I forget breaks
 (package! org-pretty-table-mode
   :recipe (:host github :repo "Fuco1/org-pretty-table") :pin "88380f865a...")
 (package! org-fragtog :pin "92119e3ae7...")
