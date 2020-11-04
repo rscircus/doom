@@ -3,6 +3,8 @@
 (package! org-roam-bibtex)
 (package! org-noter)
 
+;; ui
+(package! beacon) ; global minor mode for a blinking highliter to find where the cursor is.
 (package! rotate :pin "091b5ac4fc...") ; window mgmt
 (package! xkcd :pin "66e928706f...")
 (package! wttrin :recipe (:local-repo "lisp" :no-byte-compile t))
