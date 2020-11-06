@@ -33,6 +33,7 @@ Org noter can be visited here: https://github.com/weirdNox/org-noter
 ** TODO Understand org-roam and its integration itno doom
 ** TODO Connect org-roam with some kind of citation system like bibtex?
 ** TODO Become more fluent with org itself
+** TODO Actually org-roam-dailies can kill the journal. Migrate?
 
 Inspired by https://github.com/OwenPriceSkelly/emacs-config/blob/5fcbaaa1183873f15af8050a49a01180d8677019/config.org
 
@@ -241,7 +242,6 @@ Usually everything is =UTF-8= these days. So, only show if it is not!
 
 Doom has a modular configuration base. A good starting point is the =init.el= file and hitting =K= or =gd= to inspect the modules itself. The defaults are good enough.
 
-
 ** Look and feel
 
 *** Fonts
@@ -317,6 +317,43 @@ The basic org configuration
  org-log-done-with-time t ; add time to datetime
  )
 #+end_src
+
+
+Basic org settings
+
+#+BEGIN_SRC emacs-lisp
+(use-package! org
+  :defer t
+  :hook (org-mode . toc-org-mode)
+  :hook (org-mode . +org-pretty-mode)
+  ;; :hook (org-mode . writeroom-mode)
+  :hook (org-mode . auto-fill-mode)
+
+  :config
+  (add-hook! org-mode (hl-line-mode -1))
+  (set-company-backend! '(org-mode org-roam-mode)
+    'company-capf)
+
+  ;; basic settings
+  (setq org-src-window-setup     'plain
+        org-export-with-toc      nil
+        org-export-with-section-numbers nil
+        org-use-sub-superscripts '{}
+        org-export-with-sub-superscripts '{}
+        org-export-with-entities t
+        org-imenu-depth          9
+        org-startup-folded       'content)  ;; showeverything ;; t ;; nil
+
+  )
+#+END_SRC
+
+*** Org Agenda
+
+#+BEGIN_SRC emacs-lisp
+                                        ;(after! org
+                                        ;  (setq org-agenda-files (directory-files-recursively org_notes "\\.org$"))
+                                        ;  )
+#+END_SRC
 
 *** Org Capture
 
@@ -396,9 +433,10 @@ Use this as a daily driver.
 #+BEGIN_SRC emacs-lisp
 ;; org-journal the DOOM way
 (use-package org-journal
+  :after org
   :init
-  (setq org-journal-date-prefix "#+TITLE: "
-        org-journal-file-format "%Y-%m-%d.org"
+  (setq org-journal-file-format "%Y-%m-%d.org"
+        org-journal-file-header "#+title: Week %V, %Y\n#+created: %Y-%m-%d\n#+roam_alias:\n#+roam_tags: \"journal\", \"personal\"\n\n[[file:../journal.org][Journal]]\n\n"
         org-journal-date-format "%A, %d %B %Y")
   :config
   (setq org-journal-find-file #'find-file-other-window )
@@ -409,7 +447,6 @@ Use this as a daily driver.
 (setq org-journal-enable-agenda-integration t)
 #+END_SRC
 
-
 *** Org Noter
 
 #+begin_src emacs-lisp
@@ -418,7 +455,7 @@ Use this as a daily driver.
   :config
   (setq
    ;; The WM can handle splits
-   org-noter-notes-window-location 'other-frame
+   ;;org-noter-notes-window-location 'other-frame
    ;; Please stop opening frames
    org-noter-always-create-frame nil
    ;; I want to see the whole file
@@ -432,52 +469,92 @@ Use this as a daily driver.
 
 *** Org Roam
 
-Meanwhile doom integrates =roam= quite nicely. Access it by typing =SPC
+Meanwhile doom integrates =roam= quite nicely.
 
 #+begin_src emacs-lisp
-(after! org-roam
-  (setq org-roam-ref-capture-templates
-        '(("r" "ref" plain (function org-roam-capture--get-point)
-           "%?"
-           :file-name "websites/${slug}"
-           :head "#+TITLE: ${title}
-,#+ROAM_KEY: ${ref}
-- source :: ${ref}"
-           :unnarrowed t)))
-
-  ;; Normally, the org-roam buffer doesn't open until you explicitly call
-  ;; `org-roam'. If `+org-roam-open-buffer-on-find-file' is non-nil, the
-  ;; org-roam buffer will be opened for you when you use `org-roam-find-file'
-  ;; (but not `find-file', to limit the scope of this behavior).
-  (add-hook 'find-file-hook
-            (defun +org-roam-open-buffer-maybe-h ()
-              (and +org-roam-open-buffer-on-find-file
-                   (memq 'org-roam-buffer--update-maybe post-command-hook)
-                   (not (window-parameter nil 'window-side)) ; don't proc for popups
-                   (not (eq 'visible (org-roam-buffer--visibility)))
-                   (with-current-buffer (window-buffer)
-                     (org-roam-buffer--get-create)))))
+(use-package! org-roam
+  :after org
+  :commands (org-roam-buffer-toggle-display
+             org-roam-find-file
+             org-roam-dailies-date
+             org-roam-dailies-today
+             org-roam-dailies-tomorrow
+             org-roam-dailies-yesterday)
+  :init
+  (setq! org-roam-tag-sort                t
+         org-roam-tag-sources             '(prop)
+         org-roam-tag-separator           ", "
+         org-roam-verbose                 t
+         org-roam-buffer-width            0.2
+         org-roam-graph-max-title-length  40
+         org-roam-graph-shorten-titles    'truncate
+         org-roam-graph-exclude-matcher   '("old/" "Sunday" "Monday" "Tuesday" "Wednesday" "Thursday" "Friday" "Saturday" "journal")
+         org-roam-graph-viewer            (executable-find "open"))
+  (remove-hook 'org-roam-buffer-prepare-hook 'org-roam-buffer--insert-ref-links)
+  (add-hook! 'org-roam-buffer-prepare-hook #'outline-hide-body)
+  (setq org-roam-capture-ref-templates `(("r" "ref" plain #'org-roam-capture--get-point
+                                          "%?"
+                                          :file-name "${slug}"
+                                          :head ,(concat "#+title: ${title}\n"
+                                                         "#+roam_key: ${ref}\n"
+                                                         "#+roam_tags: article\n"
+                                                         "#+setupfile: ./setup.org\n"
+                                                         "* Related: \n"
+                                                         "  - [[${ref}][url]]\n")
+                                          :unnarrowed t))
+        org-roam-capture-templates `(("d" "default" plain #'org-roam-capture--get-point
+                                      "%?"
+                                      :file-name "%<%Y-%m-%d>-${slug}"
+                                      :head ,(concat "#+title: ${title}\n"
+                                                     "#+roam_tags:\n"
+                                                     "#+setupfile: ./setup.org\n"
+                                                     "* Description: \n"
+                                                     "* Related: \n")
+                                      :unnarrowed t))
+        org-roam-capture-immediate-template `("d" "default" plain #'org-roam-capture--get-point
+                                              "%?"
+                                              :file-name "%<%Y-%m-%d>-${slug}"
+                                              :head ,(concat "#+title: ${title}\n"
+                                                             "#+roam_tags:\n"
+                                                             "#+setupfile: ./setup.org\n"
+                                                             "* Description: \n"
+                                                             "* Related: \n")
+                                              :unnarrowed t
+                                              :immediate-finish t)
+        org-roam-dailies-capture-templates `(("t" "daily" plain #'org-roam-capture--get-point
+                                              ""
+                                              :immediate-finish t
+                                              :file-name "%<%Y-%m-%d-%A>"
+                                              :head ,(concat "#+title: %<%A, %B %d, %Y>\n"
+                                                             "#+roam_tags: journal\n"
+                                                             "* Tasks: \n" ))))
+  (map! :map org-mode-map
+        "s-TAB" (cmd! (insert "[[roam:]]")
+                      (backward-char 2)))
   )
-                                        ; TODO: This capture template for websites requires org-roam protocol
 #+end_src
 
 *** Org Roam Server
 
 #+BEGIN_SRC emacs-lisp
-(use-package! org-roam-server
+(use-package org-roam-server
   :after org-roam
   :config
   (setq org-roam-server-host "127.0.0.1"
         org-roam-server-port 10080
-        org-roam-server-export-inline-images t
         org-roam-server-authenticate nil
+        org-roam-server-export-inline-images t
+        org-roam-server-serve-files nil
         org-roam-server-label-truncate t
         org-roam-server-label-truncate-length 60
         org-roam-server-label-wrap-length 20)
   (defun org-roam-server-open ()
     "Ensure the server is active, then open the roam graph."
     (interactive)
-    (org-roam-server-mode 1)
+                                        ;(org-roam-server-mode 1)
+                                        ; https://github.com/org-roam/org-roam-server/issues/75
+    (unless (server-running-p)
+      (org-roam-server-mode))
     (browse-url-xdg-open (format "http://localhost:%d" org-roam-server-port))))
 #+END_SRC
 
@@ -613,7 +690,7 @@ The following section fills =packages.el=. And this file shouldn't be byte compi
 #+RESULTS:
 | graphviz-dot-mode | :modules | ((:private . config) (:private . modules)) | :pin | 3642a0a5f41a80c8ecef7c6143d514200b80e194 |
 
-* Now let's customize the packages above in =config.el=
+* CUSTOMIZE PACKAGES =config.el=
 ** Company
 
 It's nice to have completions almost all the time, in my opinion. Key strokes
