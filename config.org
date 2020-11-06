@@ -34,7 +34,9 @@ Org noter can be visited here: https://github.com/weirdNox/org-noter
 ** TODO Connect org-roam with some kind of citation system like bibtex?
 ** TODO Become more fluent with org itself
 
-* Basic Configuration
+Inspired by https://github.com/OwenPriceSkelly/emacs-config/blob/5fcbaaa1183873f15af8050a49a01180d8677019/config.org
+
+* BASIC CONFIG
 
 ** DOOMs stuff
 
@@ -82,6 +84,63 @@ Phew, don't sweat it.
 (advice-add 'risky-local-variable-p :override #'ignore)
 
 #+end_src
+
+*** Doom evil-snipe
+
+#+BEGIN_SRC emacs-lisp
+(use-package! evil-snipe
+  :init
+  (setq evil-snipe-scope                     'whole-visible
+        evil-snipe-spillover-scope           'whole-buffer
+        evil-snipe-repeat-scope              'buffer
+        evil-snipe-tab-increment             t
+        evil-snipe-repeat-keys               t
+        evil-snipe-override-evil-repeat-keys t)
+  :config
+  ;; when f/t/s searching, interpret open/close square brackets to be any
+  ;; open/close delimiters, respectively
+  (push '(?\[ "[[{(]") evil-snipe-aliases)
+  (push '(?\] "[]})]") evil-snipe-aliases)
+  ;; "C-;" pre-fills avy-goto-char-2 with most recent snipe
+  (map! :map (evil-snipe-parent-transient-map evil-snipe-local-mode-map)
+        "C-;" (cmd! (if evil-snipe--last
+                        (let ((most-recent-chars (nth 1 evil-snipe--last)))
+                          (if (eq 2 (length most-recent-chars))
+                              (apply #'avy-goto-char-2 most-recent-chars)
+                            (call-interactively #'avy-goto-char-2))))))
+  ;; (setq! avy-all-windows t)
+  (evil-snipe-override-mode +1))
+#+END_SRC
+*** DOOM dashboard
+
+#+BEGIN_SRC emacs-lisp
+(setq! +doom-dashboard-menu-sections
+       '(("Reload last session"
+          :icon (all-the-icons-octicon "history" :face 'doom-dashboard-menu-title)
+          :when (cond ((require 'persp-mode nil t)
+                       (file-exists-p (expand-file-name persp-auto-save-fname persp-save-dir)))
+                      ((require 'desktop nil t)
+                       (file-exists-p (desktop-full-file-name))))
+          :face (:inherit (doom-dashboard-menu-title bold))
+          :action doom/quickload-session)
+         ("Open today's note"
+          :icon (all-the-icons-octicon "book" :face 'doom-dashboard-menu-title)
+          :action org-roam-dailies-today)
+         ("Recently opened files"
+          :icon (all-the-icons-octicon "file-text" :face 'doom-dashboard-menu-title)
+          :action recentf-open-files)
+         ("Open project"
+          :icon (all-the-icons-octicon "repo" :face 'doom-dashboard-menu-title)
+          :action projectile-switch-project)
+         ;; ("Jump to bookmark"
+         ;;  :icon (all-the-icons-octicon "bookmark" :face 'doom-dashboard-menu-title)
+         ;;  :action bookmark-jump)
+         ("Open private configuration"
+          :icon (all-the-icons-octicon "tools" :face 'doom-dashboard-menu-title)
+          :when (file-directory-p doom-private-dir)
+          :action doom/open-private-config))
+       )
+#+END_SRC
 
 *** Full screen
 
@@ -218,6 +277,7 @@ Other font settings
 
 #+BEGIN_SRC emacs-lisp
 ;;(setq doom-theme 'doom-acario-light)
+;;(setq doom-theme 'doom-one-light)
 ;;(load-theme 'leuven t)
 (load-theme 'acme t)
 
@@ -598,3 +658,4 @@ If run interactively, get ENTRY from context."
 - https://raw.githubusercontent.com/tecosaur/emacs-config/master/config.org
 - https://rgoswami.me/posts/org-note-workflow/
 - https://github.com/sunnyhasija/Academic-Doom-Emacs-Config/blob/master/README.org
+- https://github.com/OwenPriceSkelly/emacs-config/blob/5fcbaaa1183873f15af8050a49a01180d8677019/config.org
