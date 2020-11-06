@@ -698,7 +698,8 @@ are just waiting to be saved!
 
 #+begin_src emacs-lisp
 (after! company
-  (setq company-idle-delay 0.3
+  (setq completion-ignore-case t
+        company-idle-delay 0.3
         company-minimum-prefix-length 2)
   (setq company-show-numbers t)
   (add-hook 'evil-normal-state-entry-hook #'company-abort)) ;; make aborting less annoying.
@@ -735,12 +736,12 @@ let's improve that memory.
     company-files
     company-yasnippet))
 
-(setq ispell-program-name (executable-find "hunspell")
-      ispell-dictionary "en_US,de_DE")
+(after! ispell
+  (setq ispell-program-name (executable-find "hunspell")
+        ispell-dictionary "en_US,de_DE")
 
-(!after ispell
-        (ispell-set-spellchecker-params)
-        (ispell-hunspell-add-multi-dic "en_US,de_DE"))
+  (ispell-set-spellchecker-params)
+  (ispell-hunspell-add-multi-dic "en_US,de_DE"))
 #+end_src
 
 
