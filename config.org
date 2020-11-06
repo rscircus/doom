@@ -301,12 +301,20 @@ Proportional fonts
 The basic org configuration
 
 #+begin_src emacs-lisp
+;; Directories
 (setq
  org_notes (concat (getenv "HOME") "/src/org/")
  zot_bib (concat (getenv "HOME") "/src/zotero/zotLib.bib")
  org-directory org_notes
  deft-directory org_notes
  org-roam-directory org_notes
+ org-my-anki-file (concat org_notes "anki.org")
+ )
+
+;; Defaults
+(setq
+ org-log-done 'time ; add datetime stamp when a task is done
+ org-log-done-with-time t ; add time to datetime
  )
 #+end_src
 
@@ -336,10 +344,17 @@ The basic org configuration
            "\n\n* %^{Scope of task||TODO|STUDY|MEET} %^{Title} %^g\nSCHEDULED: %^t\n:PROPERTIES:\n:CAPTURED: %U\n:END:\n\n%i%?"
            :empty-lines 1)
 
-          ("j" "Journal" entry
-           (file+olp+datetree "journal.org")
-           "* %?\n"
-           :empty-lines 1)))
+          ;; anki
+          ("a" "Anki basic" entry
+           (file+headline org-my-anki-file "Dispatch Shelf")
+           "* %<%H:%M>   %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: Mega\n:END:\n** Front\n%?\n** Back\n%x\n")
+
+          ("A" "Anki cloze" entry
+           (file+headline org-my-anki-file "Dispatch Shelf")
+           "* %<%H:%M>   %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Mega\n:END:\n** Text\n%x\n** Extra\n")
+
+          )
+        )
   )
 #+END_SRC
 
@@ -466,6 +481,53 @@ Meanwhile doom integrates =roam= quite nicely. Access it by typing =SPC
     (browse-url-xdg-open (format "http://localhost:%d" org-roam-server-port))))
 #+END_SRC
 
+
+*** Org Anki
+
+There is no =org-anki= per se. But I'd like to implement sth like it based on the lovely intro by https://yiufung.net/post/anki-org/.
+
+#+BEGIN_SRC emacs-lisp
+(use-package anki-editor
+  :after org
+  :bind (:map org-mode-map
+                                        ; these are not used by doom
+         ("<f5>" . anki-editor-cloze-region-auto-incr)
+         ("<f6>" . anki-editor-cloze-region-dont-incr)
+         ("<f7>" . anki-editor-reset-cloze-number)
+         ("<f8>" . anki-editor-push-tree))
+  :hook (org-capture-after-finalize . anki-editor-reset-cloze-number) ; Reset cloze-number after each capture.
+  :config
+  (setq anki-editor-create-decks t ;; Allow anki-editor to create a new deck if it doesn't exist
+        anki-editor-org-tags-as-anki-tags t)
+
+  (defun anki-editor-cloze-region-auto-incr (&optional arg)
+    "Cloze region without hint and increase card number."
+    (interactive)
+    (anki-editor-cloze-region my-anki-editor-cloze-number "")
+    (setq my-anki-editor-cloze-number (1+ my-anki-editor-cloze-number))
+    (forward-sexp))
+
+  (defun anki-editor-cloze-region-dont-incr (&optional arg)
+    "Cloze region without hint using the previous card number."
+    (interactive)
+    (anki-editor-cloze-region (1- my-anki-editor-cloze-number) "")
+    (forward-sexp))
+
+  (defun anki-editor-reset-cloze-number (&optional arg)
+    "Reset cloze number to ARG or 1"
+    (interactive)
+    (setq my-anki-editor-cloze-number (or arg 1)))
+
+  (defun anki-editor-push-tree ()
+    "Push all notes under a tree."
+    (interactive)
+    (anki-editor-push-notes '(4))
+    (anki-editor-reset-cloze-number))
+
+  ;; Initialize
+  (anki-editor-reset-cloze-number)
+  )
+#+END_SRC
 ** Deft
 
 Quickly search through org.
@@ -526,7 +588,7 @@ The following section fills =packages.el=. And this file shouldn't be byte compi
 (package! org-roam-bibtex)
 (package! org-roam-server :recipe (:host github :repo "org-roam/org-roam-server" :files ("*")))
 (package! org-noter)
-
+(package! anki-editor) ; requires https://github.com/FooSoft/anki-connect#installation - to connect w/ Anki
                                         ;(package! calctex :recipe (:host github :repo "johnbcoughlin/calctex"
                                         ;                           :files ("*.el" "calctex/*.el" "calctex-contrib/*.el" "org-calctex/*.el"))
                                         ; :pin "7fa2673c64...")
