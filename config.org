@@ -22,7 +22,7 @@ However, the first three things are necessary to do the last. So, here ware, mul
 ** DONE Copy and paste images into org files
 ** TODO Understand org-noter and its integration into doom
 :LOGBOOK:
-CLOCK: [2020-11-01 So 09:31]
+CLOCK: [2020-11-01 So 09:31]--[2020-11-01 So 10:31] =>  1:00
 :END:
 *** On org-noter itself
 
@@ -36,6 +36,10 @@ Org noter can be visited here: https://github.com/weirdNox/org-noter
 ** TODO Actually org-roam-dailies can kill the journal. Migrate?
 
 Inspired by https://github.com/OwenPriceSkelly/emacs-config/blob/5fcbaaa1183873f15af8050a49a01180d8677019/config.org
+** TODO Teco again...
+:LOGBOOK:
+CLOCK: [2020-11-08 So 20:59]
+:END:
 
 * BASIC CONFIG
 
@@ -282,10 +286,9 @@ Other font settings
                                         ;(setq acme-theme-black-fg t)
 
 ;; Fontify the whole line for headings (with a background color). Has to go above loven, but below acme.
-(setq org-fontify-whole-heading-line t)
+                                        ;(setq org-fontify-whole-heading-line t)
+)
 #+end_src
-
-Proportional fonts
 
 ** Mouse
 
@@ -743,6 +746,7 @@ let's improve that memory.
 
 
 ** Info colors
+
 #+begin_src emacs-lisp
 (use-package! info-colors
   :commands (info-colors-fontify-node))
