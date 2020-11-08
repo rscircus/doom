@@ -483,7 +483,6 @@ Meanwhile doom integrates =roam= quite nicely.
   :init
   (setq! org-roam-tag-sort                t
          org-roam-tag-sources             '(prop)
-         org-roam-tag-separator           ", "
          org-roam-verbose                 t
          org-roam-buffer-width            0.2
          org-roam-graph-max-title-length  40
