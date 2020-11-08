@@ -63,6 +63,7 @@ Phew, don't sweat it.
 
 #+begin_src emacs-lisp
 (setq-default
+ delete-by-moving-to-trash t
  window-combination-resize t ; take new window space from all windows
  x-stretch-cursor t ; stretch cursor to glyph width
  )
