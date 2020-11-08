@@ -40,3 +40,6 @@
 ;; themes
 (package! leuven-theme) ;; great theme for org
 (package! acme-theme) ;; even greater theme
+
+;; everything emacs?
+(package! w3m)
