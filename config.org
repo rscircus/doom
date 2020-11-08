@@ -688,9 +688,6 @@ The following section fills =packages.el=. And this file shouldn't be byte compi
 (package! acme-theme) ;; even greater theme
 #+end_src
 
-#+RESULTS:
-| graphviz-dot-mode | :modules | ((:private . config) (:private . modules)) | :pin | 3642a0a5f41a80c8ecef7c6143d514200b80e194 |
-
 * CUSTOMIZE PACKAGES =config.el=
 ** Company
 
