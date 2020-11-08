@@ -9,18 +9,23 @@
 (package! theme-magic :pin "844c4311bd...") ; terminal theme support
 (package! ess-view :pin "d4e5a340b7...") ; data frames all the way down
 (package! info-colors :pin "47ee73cc19...") ; makes info pages better
+(package! imenu-list)
 
 ;; sanity
-; TODO: not ready yet: (package! origami) ; fold stuff away
+(package! tldr)
+                                        ; TODO: not ready yet: (package! origami) ; fold stuff away
 
 ;; org
 (package! org-roam-bibtex)
+(package! org-roam-server :recipe (:host github :repo "org-roam/org-roam-server" :files ("*")))
 (package! org-noter)
-
+(package! org-drill)
+(package! anki-editor) ; requires https://github.com/FooSoft/anki-connect#installation - to connect w/ Anki
                                         ;(package! calctex :recipe (:host github :repo "johnbcoughlin/calctex"
                                         ;                           :files ("*.el" "calctex/*.el" "calctex-contrib/*.el" "org-calctex/*.el"))
                                         ; :pin "7fa2673c64...")
 (package! org-super-agenda :pin "3264255989...")
+(package! org-pomodoro) ; I forget breaks
 (package! org-pretty-table-mode
   :recipe (:host github :repo "Fuco1/org-pretty-table") :pin "88380f865a...")
 (package! org-fragtog :pin "92119e3ae7...")
