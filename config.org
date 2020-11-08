@@ -665,6 +665,7 @@ The following section fills =packages.el=. And this file shouldn't be byte compi
 (package! org-roam-bibtex)
 (package! org-roam-server :recipe (:host github :repo "org-roam/org-roam-server" :files ("*")))
 (package! org-noter)
+(package! org-drill)
 (package! anki-editor) ; requires https://github.com/FooSoft/anki-connect#installation - to connect w/ Anki
                                         ;(package! calctex :recipe (:host github :repo "johnbcoughlin/calctex"
                                         ;                           :files ("*.el" "calctex/*.el" "calctex-contrib/*.el" "org-calctex/*.el"))
