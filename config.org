@@ -176,6 +176,7 @@ Usually everything is =UTF-8= these days. So, only show if it is not!
 *** Dired
 
 #+BEGIN_SRC emacs-lisp
+(setq ranger-ovverride-dired-mode t)
                                         ;(after! dired
                                         ;  ;; Rust version ls
                                         ;  (when-let (exa (executable-find "exa"))
