@@ -286,6 +286,13 @@ Other font settings
       )
 #+end_src
 
+And emojis:
+
+#+begin_src emacs-lisp
+(when (eq system-type 'gnu/linux)
+  (set-fontset-font t 'symbol "Noto Color Emoji" nil 'append))
+#+end_src
+
 *** Theme
 
 #+BEGIN_SRC emacs-lisp
