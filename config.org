@@ -438,7 +438,7 @@ Use this as a daily driver.
   :after org
   :init
   (setq org-journal-file-format "%Y-%m-%d.org"
-        org-journal-file-header "#+title: Week %V, %Y\n#+created: %Y-%m-%d\n#+roam_alias:\n#+roam_tags: \"journal\", \"personal\"\n\n[[file:../journal.org][Journal]]\n\n"
+        org-journal-file-header "#+title: Week %V, %Y\n#+created: %Y-%m-%d\n#+roam_alias:\n#+roam_tags: \"journal\" \"personal\"\n\n[[file:../journal.org][Journal]]\n\n"
         org-journal-date-format "%A, %d %B %Y")
   :config
   (setq org-journal-find-file #'find-file-other-window )
