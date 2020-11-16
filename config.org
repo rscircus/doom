@@ -94,6 +94,27 @@ Phew, don't sweat it.
 (advice-add 'risky-local-variable-p :override #'ignore)
 #+end_src
 
+Some doom specifics.
+
+These variables control what key to use for leader and localleader keys:
+
+- For Evil users:
+      
+    =doom-leader-key (default: SPC)=
+    =doom-localleader-key (default: SPC m)=        
+        
+- For Emacs and Insert state (evil users), and non-evil users:
+      
+    =doom-leader-alt-key (default: M-SPC for evil users, C-c otherwise)=
+    =doom-localleader-alt-key (default: M-SPC m for evil users, C-c l otherwise)=
+
+So, I like =SPC= to be the leader key, however, I prefer "," to be the local leader. It's somehow flipped compared to my
+vim config, but makes sense due to muscle memory issues.
+
+#+begin_src emacs-lisp
+(setq doom-localleader-key ",")
+#+end_src
+
 *** Full screen
 
 Focus!
@@ -797,6 +818,7 @@ If run interactively, get ENTRY from context."
 
 * Resources:
 
+- https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#how-do-i-change-the-leaderlocalleader-keys
 - https://tecosaur.github.io/emacs-config/config.html
 - https://raw.githubusercontent.com/tecosaur/emacs-config/master/config.org
 - https://rgoswami.me/posts/org-note-workflow/
