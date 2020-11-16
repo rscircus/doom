@@ -79,12 +79,13 @@ Phew, don't sweat it.
       auto-save-default t
       inhibit-compacting-font-caches t ; keep glyphs in memory
       truncate-string-ellipsis "…"
+      display-line-numbers-type 'relative ; switch with spc t l
       )
-
 (display-time-mode 1) ; show time in mode-line
 (delete-selection-mode 1) ; replace selection when inserting text
 (global-subword-mode 1) ; iterate through CamelCase words
 (show-paren-mode 1)
+
                                         ;(setq line-spacing 0.3) ; huge line spacing
 (unless (equal "Battery status not available" (battery))
   (display-battery-mode 1))
@@ -262,8 +263,6 @@ Other font settings
       doom-variable-pitch-font (font-spec :family "Overpass" :size 24)
       doom-serif-font (font-spec :family "IBM Plex Mono" :size 28 :weight 'light)
       )
-
-(setq display-line-numbers-type t)
 #+end_src
 
 *** Theme
