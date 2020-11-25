@@ -70,7 +70,7 @@ Phew, don't sweat it.
  delete-by-moving-to-trash t
  window-combination-resize t ; take new window space from all windows
  x-stretch-cursor t ; stretch cursor to glyph width
- fill-column 120 ; keep your space
+ fill-column 80 ; keep your space
  delete-trailing-lines t ; get ride of white noise
  )
 
