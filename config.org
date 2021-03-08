@@ -300,23 +300,35 @@ And emojis:
   :config
   (setq doom-themes-enable-bold t      ; if nil, bold is universally disabled
         doom-themes-enable-italic t)   ; if nil, italics is universally disabled
-  ;;(load-theme 'leuven t)
-  (load-theme 'acme t)
+  ;; (load-theme 'leuven t)
+  ;; (load-theme 'doom-acario-light t)
+  ;; (load-theme 'doom-solarized-light t)
+  ;; (load-theme 'doom-one-light t)
 
+  (load-theme 'acme t)
+  (doom-themes-org-config)
   (setq acme-theme-black-fg t)
 
   ;; Fontify the whole line for headings (with a background color). Has to go above loven, but below acme.
   (setq org-fontify-whole-heading-line t)
-  ;; (load-theme 'doom-acario-light t)
-  ;; (load-theme 'doom-solarized-light t)
-  ;; (load-theme 'doom-one-light t)
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
 
   ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
+  )
+
 ;;(setq doom-theme 'doom-one-light)
+
+;; Don't scale font height in org-mode
+(custom-set-faces
+ '(hl-line ((t (:height 1.0))))
+ '(org-level-1 ((t (:inherit outline-1 :height 1.0))))
+ '(org-level-2 ((t (:inherit outline-2 :height 1.0))))
+ '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
+ '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
+ '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
+ )
 #+end_src
 
 ** Mouse
