@@ -778,12 +778,12 @@ let's improve that memory.
     company-files
     company-yasnippet))
 
-(after! ispell
-  (setq ispell-program-name (executable-find "hunspell")
-        ispell-dictionary "en_US,de_DE")
-
-  (ispell-set-spellchecker-params)
-  (ispell-hunspell-add-multi-dic "en_US,de_DE"))
+;;(after! ispell
+;;  (setq ispell-program-name (executable-find "hunspell")
+;;        ispell-dictionary "en_US,de_DE")
+;;
+;;  (ispell-set-spellchecker-params)
+;;  (ispell-hunspell-add-multi-dic "en_US,de_DE"))
 #+end_src
 
 
