@@ -45,8 +45,8 @@ CLOCK: [2020-11-08 So 20:59]
 
 ** DOOMs stuff
 
-#+begin_src emacs-lisp
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+#+begin_src emacs-lisp :comments no
+;;; config.el -*- lexical-binding: t; -*-
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
