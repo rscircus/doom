@@ -301,17 +301,18 @@ And emojis:
   :config
   (setq doom-themes-enable-bold t      ; if nil, bold is universally disabled
         doom-themes-enable-italic t)   ; if nil, italics is universally disabled
-  ;; (load-theme 'leuven t)
+
+  (load-theme 'leuven t)
   ;; (load-theme 'doom-acario-light t)
   ;; (load-theme 'doom-solarized-light t)
   ;; (load-theme 'doom-one-light t)
 
-  (load-theme 'acme t)
-  (doom-themes-org-config)
-  (setq acme-theme-black-fg t)
-
-  ;; Fontify the whole line for headings (with a background color). Has to go above loven, but below acme.
+  ;; Fontify the whole line for headings (with a background color).
   (setq org-fontify-whole-heading-line t)
+
+  ;; (load-theme 'acme t)
+  ;;(setq acme-theme-black-fg t)
+  (doom-themes-org-config)
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -322,6 +323,12 @@ And emojis:
 ;;(setq doom-theme 'doom-one-light)
 
 ;; Don't scale font height in org-mode
+;; Leuven specific
+(setq leuven-scale-outline-headlines nil)
+(setq leuven-scale-org-agenda-structure nil)
+(setq leuven-scale-volatile-highlight nil)
+
+;; Generally don't scale anything
 (custom-set-faces
  '(hl-line ((t (:height 1.0))))
  '(org-level-1 ((t (:inherit outline-1 :height 1.0))))
