@@ -537,7 +537,7 @@ Meanwhile doom integrates =roam= quite nicely.
          org-roam-buffer-width            0.2
          org-roam-graph-max-title-length  40
          org-roam-graph-shorten-titles    'truncate
-         org-roam-graph-exclude-matcher   '("old/" "Sunday" "Monday" "Tuesday" "Wednesday" "Thursday" "Friday" "Saturday" "journal")
+         org-roam-graph-exclude-matcher   '("old/" "Monday" "Tuesday" "Wednesday" "Thursday" "Friday" "Saturday" "Sunday" "journal")
          org-roam-graph-viewer            (executable-find "open"))
   (remove-hook 'org-roam-buffer-prepare-hook 'org-roam-buffer--insert-ref-links)
   (add-hook! 'org-roam-buffer-prepare-hook #'outline-hide-body)
@@ -547,7 +547,6 @@ Meanwhile doom integrates =roam= quite nicely.
                                           :head ,(concat "#+title: ${title}\n"
                                                          "#+roam_key: ${ref}\n"
                                                          "#+roam_tags: article\n"
-                                                         "#+setupfile: ./setup.org\n"
                                                          "* Related: \n"
                                                          "  - [[${ref}][url]]\n")
                                           :unnarrowed t))
@@ -555,28 +554,8 @@ Meanwhile doom integrates =roam= quite nicely.
                                       "%?"
                                       :file-name "%<%Y-%m-%d>-${slug}"
                                       :head ,(concat "#+title: ${title}\n"
-                                                     "#+roam_tags:\n"
-                                                     "#+setupfile: ./setup.org\n"
-                                                     "* Description: \n"
-                                                     "* Related: \n")
-                                      :unnarrowed t))
-        org-roam-capture-immediate-template `("d" "default" plain #'org-roam-capture--get-point
-                                              "%?"
-                                              :file-name "%<%Y-%m-%d>-${slug}"
-                                              :head ,(concat "#+title: ${title}\n"
-                                                             "#+roam_tags:\n"
-                                                             "#+setupfile: ./setup.org\n"
-                                                             "* Description: \n"
-                                                             "* Related: \n")
-                                              :unnarrowed t
-                                              :immediate-finish t)
-        org-roam-dailies-capture-templates `(("t" "daily" plain #'org-roam-capture--get-point
-                                              ""
-                                              :immediate-finish t
-                                              :file-name "%<%Y-%m-%d-%A>"
-                                              :head ,(concat "#+title: %<%A, %B %d, %Y>\n"
-                                                             "#+roam_tags: journal\n"
-                                                             "* Tasks: \n" ))))
+                                                     "#+roam_tags:\n")
+                                      :unnarrowed t)))
   (map! :map org-mode-map
         "s-TAB" (cmd! (insert "[[roam:]]")
                       (backward-char 2)))
