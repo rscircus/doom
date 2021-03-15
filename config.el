@@ -1,4 +1,4 @@
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+;;; config.el -*- lexical-binding: t; -*-
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
@@ -10,6 +10,8 @@
  delete-by-moving-to-trash t
  window-combination-resize t ; take new window space from all windows
  x-stretch-cursor t ; stretch cursor to glyph width
+ fill-column 80 ; keep your space
+ delete-trailing-lines t ; get ride of white noise
  )
 
 (setq undo-limit 80000000 ; 80Mb undo limit
@@ -17,18 +19,21 @@
       auto-save-default t
       inhibit-compacting-font-caches t ; keep glyphs in memory
       truncate-string-ellipsis "…"
+      display-line-numbers-type 'relative ; switch with spc t l
       )
-
 (display-time-mode 1) ; show time in mode-line
 (delete-selection-mode 1) ; replace selection when inserting text
 (global-subword-mode 1) ; iterate through CamelCase words
 (show-paren-mode 1)
+
                                         ;(setq line-spacing 0.3) ; huge line spacing
 (unless (equal "Battery status not available" (battery))
   (display-battery-mode 1))
 
 ;; disable risky local variables warning
 (advice-add 'risky-local-variable-p :override #'ignore)
+
+(setq doom-localleader-key ",")
 
 (if (eq initial-window-system 'x)                 ; if started by emacs command or desktop file
     (toggle-frame-maximized)
@@ -67,6 +72,7 @@
            (unless (string= "-" project-name)
              (format (if (buffer-modified-p)  " ◉ %s" "  ●  %s") project-name))))))
 
+(setq doom-modeline-height 18)
 (defun doom-modeline-conditional-buffer-encoding ()
   (setq-local doom-modeline-buffer-encoding
               (unless (or (eq buffer-file-coding-system 'utf-8-unix)
@@ -85,12 +91,13 @@
                                         ;       (funcall orig-fun))
                                         ;    (funcall orig-fun)))
 
-;(after! dired
-;  ;; Rust version ls
-;  (when-let (exa (executable-find "exa"))
-;    (setq insert-directory-program "/home/linuxbrew/.linuxbrew/bin/exa")
-;    (setq dired-listing-switches (string-join (list "-ahl" "--group-directories-first") " ")))
-;  )
+(setq ranger-ovverride-dired-mode t)
+                                        ;(after! dired
+                                        ;  ;; Rust version ls
+                                        ;  (when-let (exa (executable-find "exa"))
+                                        ;    (setq insert-directory-program "/home/linuxbrew/.linuxbrew/bin/exa")
+                                        ;    (setq dired-listing-switches (string-join (list "-ahl" "--group-directories-first") " ")))
+                                        ;  )
 
 (use-package! evil-snipe
   :init
@@ -142,36 +149,55 @@
 ;          :action doom/open-private-config))
 ;       )
 
-(setq doom-font (font-spec :family "JetBrains Mono" :size 24)
+(setq doom-font (font-spec :family "JetBrains Mono" :size 20)
       doom-big-font (font-spec :family "JetBrains Mono" :size 24)
-      doom-variable-pitch-font (font-spec :family "Overpass" :size 24)
-      doom-serif-font (font-spec :family "IBM Plex Mono" :size 28 :weight 'light)
+      doom-variable-pitch-font (font-spec :family "Overpass" :size 20)
+      doom-serif-font (font-spec :family "IBM Plex Mono" :size 24 :weight 'light)
       )
 
-(setq display-line-numbers-type t)
+(when (eq system-type 'gnu/linux)
+  (set-fontset-font t 'symbol "Noto Color Emoji" nil 'append))
 
 (use-package! doom-themes
   :config
   (setq doom-themes-enable-bold t      ; if nil, bold is universally disabled
         doom-themes-enable-italic t)   ; if nil, italics is universally disabled
+
   (load-theme 'leuven t)
   ;; (load-theme 'doom-acario-light t)
   ;; (load-theme 'doom-solarized-light t)
   ;; (load-theme 'doom-one-light t)
 
+  ;; Fontify the whole line for headings (with a background color).
+  (setq org-fontify-whole-heading-line t)
+
+  ;; (load-theme 'acme t)
+  ;;(setq acme-theme-black-fg t)
+  (doom-themes-org-config)
+
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
 
   ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
+  )
+
 ;;(setq doom-theme 'doom-one-light)
-;;(load-theme 'leuven t)
-                                        ;(load-theme 'acme t)
 
-                                        ;(setq acme-theme-black-fg t)
+;; Don't scale font height in org-mode
+;; Leuven specific
+(setq leuven-scale-outline-headlines nil)
+(setq leuven-scale-org-agenda-structure nil)
+(setq leuven-scale-volatile-highlight nil)
 
-;; Fontify the whole line for headings (with a background color). Has to go above loven, but below acme.
-                                        ;(setq org-fontify-whole-heading-line t)
+;; Generally don't scale anything
+(custom-set-faces
+ '(hl-line ((t (:height 1.0))))
+ '(org-level-1 ((t (:inherit outline-1 :height 1.0))))
+ '(org-level-2 ((t (:inherit outline-2 :height 1.0))))
+ '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
+ '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
+ '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
+ )
 
 (map! :n [mouse-8] #'better-jumper-jump-backward
       :n [mouse-9] #'better-jumper-jump-forward)
@@ -275,7 +301,7 @@
   :after org
   :init
   (setq org-journal-file-format "%Y-%m-%d.org"
-        org-journal-file-header "#+title: Week %V, %Y\n#+created: %Y-%m-%d\n#+roam_alias:\n#+roam_tags: \"journal\", \"personal\"\n\n[[file:../journal.org][Journal]]\n\n"
+        org-journal-file-header "#+title: Week %V, %Y\n#+created: %Y-%m-%d\n#+roam_alias:\n#+roam_tags: \"journal\" \"personal\"\n\n[[file:../journal.org][Journal]]\n\n"
         org-journal-date-format "%A, %d %B %Y")
   :config
   (setq org-journal-find-file #'find-file-other-window )
@@ -316,7 +342,7 @@
          org-roam-buffer-width            0.2
          org-roam-graph-max-title-length  40
          org-roam-graph-shorten-titles    'truncate
-         org-roam-graph-exclude-matcher   '("old/" "Sunday" "Monday" "Tuesday" "Wednesday" "Thursday" "Friday" "Saturday" "journal")
+         org-roam-graph-exclude-matcher   '("old/" "Monday" "Tuesday" "Wednesday" "Thursday" "Friday" "Saturday" "Sunday" "journal")
          org-roam-graph-viewer            (executable-find "open"))
   (remove-hook 'org-roam-buffer-prepare-hook 'org-roam-buffer--insert-ref-links)
   (add-hook! 'org-roam-buffer-prepare-hook #'outline-hide-body)
@@ -326,7 +352,6 @@
                                           :head ,(concat "#+title: ${title}\n"
                                                          "#+roam_key: ${ref}\n"
                                                          "#+roam_tags: article\n"
-                                                         "#+setupfile: ./setup.org\n"
                                                          "* Related: \n"
                                                          "  - [[${ref}][url]]\n")
                                           :unnarrowed t))
@@ -334,28 +359,8 @@
                                       "%?"
                                       :file-name "%<%Y-%m-%d>-${slug}"
                                       :head ,(concat "#+title: ${title}\n"
-                                                     "#+roam_tags:\n"
-                                                     "#+setupfile: ./setup.org\n"
-                                                     "* Description: \n"
-                                                     "* Related: \n")
-                                      :unnarrowed t))
-        org-roam-capture-immediate-template `("d" "default" plain #'org-roam-capture--get-point
-                                              "%?"
-                                              :file-name "%<%Y-%m-%d>-${slug}"
-                                              :head ,(concat "#+title: ${title}\n"
-                                                             "#+roam_tags:\n"
-                                                             "#+setupfile: ./setup.org\n"
-                                                             "* Description: \n"
-                                                             "* Related: \n")
-                                              :unnarrowed t
-                                              :immediate-finish t)
-        org-roam-dailies-capture-templates `(("t" "daily" plain #'org-roam-capture--get-point
-                                              ""
-                                              :immediate-finish t
-                                              :file-name "%<%Y-%m-%d-%A>"
-                                              :head ,(concat "#+title: %<%A, %B %d, %Y>\n"
-                                                             "#+roam_tags: journal\n"
-                                                             "* Tasks: \n" ))))
+                                                     "#+roam_tags:\n")
+                                      :unnarrowed t)))
   (map! :map org-mode-map
         "s-TAB" (cmd! (insert "[[roam:]]")
                       (backward-char 2)))
@@ -444,6 +449,16 @@
                                         ;(deft-default-extension "org")
   )
 
+(use-package nroam
+  :after org-roam
+  :config
+  (add-hook 'org-mode-hook #'nroam-setup-maybe))
+
+(use-package! org-xournalpp
+  :config
+  (add-hook 'org-mode-hook 'org-xournalpp-mode)
+  )
+
 (after! company
   (setq completion-ignore-case t
         company-idle-delay 0.3
@@ -466,12 +481,12 @@
     company-files
     company-yasnippet))
 
-(after! ispell
-  (setq ispell-program-name (executable-find "hunspell")
-        ispell-dictionary "en_US,de_DE")
-
-  (ispell-set-spellchecker-params)
-  (ispell-hunspell-add-multi-dic "en_US,de_DE"))
+;;(after! ispell
+;;  (setq ispell-program-name (executable-find "hunspell")
+;;        ispell-dictionary "en_US,de_DE")
+;;
+;;  (ispell-set-spellchecker-params)
+;;  (ispell-hunspell-add-multi-dic "en_US,de_DE"))
 
 (use-package! info-colors
   :commands (info-colors-fontify-node))

@@ -4,7 +4,7 @@
 (package! beacon) ; global minor mode for a blinking highliter to find where the cursor is.
 (package! rotate :pin "091b5ac4fc...") ; window mgmt
 (package! xkcd :pin "66e928706f...")
-(package! wttrin :recipe (:local-repo "lisp" :no-byte-compile t))
+                                        ;(package! wttrin :recipe (:local-repo "lisp" :no-byte-compile t))
 (package! spray :pin "00638bc916...") ; flash words on screen
 (package! theme-magic :pin "844c4311bd...") ; terminal theme support
 (package! ess-view :pin "d4e5a340b7...") ; data frames all the way down
@@ -33,6 +33,14 @@
 (package! org-ref :pin "f582e9c53e...") ; citations
 (package! org-graph-view :recipe (:host github :repo "alphapapa/org-graph-view") :pin "13314338d7...")
 (package! org-chef :pin "5b461ed7d458cdcbff0af5013fbdbe88cbfb13a4") ; url -> orgified version of it
+(package! nroam
+  :recipe (:host github
+           :repo "NicolasPetton/nroam"
+           :files ("resources" "*.el")))
+(package! org-xournalpp
+  :recipe (:host gitlab
+           :repo "vherrmann/org-xournalpp"
+           :files ("resources" "*.el")))
 (package! company-org-roam :recipe (:host github :repo "org-roam/company-org-roam"))
 (package! graphviz-dot-mode :pin "3642a0a5f41a80c8ecef7c6143d514200b80e194")
 (package! ox-gfm :pin "99f93011b0...") ; markdown export with GitHub support
