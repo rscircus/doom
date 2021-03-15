@@ -678,7 +678,7 @@ The following section fills =packages.el=. And this file shouldn't be byte compi
 (package! beacon) ; global minor mode for a blinking highliter to find where the cursor is.
 (package! rotate :pin "091b5ac4fc...") ; window mgmt
 (package! xkcd :pin "66e928706f...")
-(package! wttrin :recipe (:local-repo "lisp" :no-byte-compile t))
+                                        ;(package! wttrin :recipe (:local-repo "lisp" :no-byte-compile t))
 (package! spray :pin "00638bc916...") ; flash words on screen
 (package! theme-magic :pin "844c4311bd...") ; terminal theme support
 (package! ess-view :pin "d4e5a340b7...") ; data frames all the way down
