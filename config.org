@@ -179,6 +179,7 @@ Rotate windows:
 Usually everything is =UTF-8= these days. So, only show if it is not!
 
 #+begin_src emacs-lisp
+(setq doom-modeline-height 18)
 (defun doom-modeline-conditional-buffer-encoding ()
   (setq-local doom-modeline-buffer-encoding
               (unless (or (eq buffer-file-coding-system 'utf-8-unix)
