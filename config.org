@@ -728,6 +728,29 @@ The following section fills =packages.el=. And this file shouldn't be byte compi
 #+end_src
 
 * CUSTOMIZE PACKAGES =config.el=
+
+** nroam (backlinks in note)
+
+This adds backlinks into the note directly. I guess it ends up upstream in
+org-roam one day...
+
+#+begin_src emacs-lisp
+(use-package nroam
+  :after org-roam
+  :config
+  (add-hook 'org-mode-hook #'nroam-setup-maybe))
+#+end_src
+** xournalpp
+
+This allows us to use a pen to edit notes using xournalpp. Add it to org directly.
+
+#+begin_src emacs-lisp
+(use-package! org-xournalpp
+  :config
+  (add-hook 'org-mode-hook 'org-xournalpp-mode)
+  )
+#+end_src
+
 ** Company
 
 It's nice to have completions almost all the time, in my opinion. Key strokes
